@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ghost Runner 3D</string>
+    <string name="exit_title">Exit game?</string>
+    <string name="exit_message">Your run will be lost.</string>
+    <string name="exit_yes">Exit</string>
+    <string name="exit_no">Keep playing</string>
+</resources>
