@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Ghost Runner 3D - Neon Endless Runner</title>
+  <meta name="description" content="Smooth 3D Neon Endless Runner game featuring ghosts, dynamic lighting, and vibrant spectral cyber worlds.">
+  <meta name="theme-color" content="#080114">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="canvas-container">
+    <canvas id="game-canvas"></canvas>
+  </div>
+
+  <div id="ui-layer">
+    <!-- Top HUD -->
+    <header class="top-hud">
+      <div class="hud-group">
+        <div class="hud-score-box">
+          <span class="score-title">SCORE</span>
+          <span id="score-val" class="score-value">0</span>
+          <span id="multiplier-val" class="multiplier-badge">x1</span>
+        </div>
+        <div id="distance-val" class="distance-meter">0 m</div>
+        <div id="powerup-badge" class="powerup-bar">SHIELD ACTIVE</div>
+      </div>
+
+      <div class="hud-right">
+        <div class="coins-box">
+          <span class="coin-icon">★</span>
+          <span id="coins-val" class="coins-value">0</span>
+        </div>
+        <div class="hud-buttons">
+          <button id="btn-sound" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+          <button id="btn-music" class="icon-btn" title="Toggle Music" aria-label="Toggle Music">🎵</button>
+          <button id="btn-pause" class="icon-btn" title="Pause Game" aria-label="Pause Game">⏸</button>
+          <button id="btn-fs" class="icon-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="float-notice" class="float-notice">+100</div>
+
+    <!-- Mobile Touch Controls -->
+    <footer class="mobile-controls">
+      <div class="controls-left">
+        <button id="btn-left" class="touch-btn" aria-label="Move Left">
+          <span class="arrow">◀</span>
+          <span class="label">LEFT</span>
+        </button>
+        <button id="btn-right" class="touch-btn" aria-label="Move Right">
+          <span class="arrow">▶</span>
+          <span class="label">RIGHT</span>
+        </button>
+      </div>
+      <div class="controls-right">
+        <button id="btn-slide" class="touch-btn touch-btn-action" aria-label="Slide Down">
+          <span class="arrow">▼</span>
+          <span class="label">SLIDE</span>
+        </button>
+        <button id="btn-jump" class="touch-btn touch-btn-action" aria-label="Jump Up">
+          <span class="arrow">▲</span>
+          <span class="label">JUMP</span>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Start Menu Screen -->
+  <div id="start-overlay" class="screen-overlay">
+    <div class="modal-card">
+      <h1 class="game-title">GHOST RUNNER 3D</h1>
+      <p class="game-subtitle">NEON SPECTRAL ODYSSEY</p>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">HIGH SCORE</div>
+          <div id="start-best-score" class="stat-value">0</div>
+        </div>
+        <div class="stat-item gold">
+          <div class="stat-label">GOLD COINS</div>
+          <div id="start-best-coins" class="stat-value">0</div>
+        </div>
+      </div>
+
+      <div class="instructions-card">
+        <b>Controls:</b><br>
+        • <b>Swipe / Tap Left & Right:</b> Change 3 lanes<br>
+        • <b>Swipe Up / Tap Jump:</b> Leap over hazards & jump into coin arcs<br>
+        • <b>Swipe Down / Tap Slide:</b> Duck under high neon laser beams
+      </div>
+
+      <button id="btn-start-game" class="btn-primary">START RUN</button>
+    </div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameover-overlay" class="screen-overlay hidden">
+    <div class="modal-card">
+      <h1 class="game-title" style="color: #ff007f;">RUN TERMINATED</h1>
+      <p class="game-subtitle">GHOST SPECTER COLLISION</p>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">FINAL SCORE</div>
+          <div id="go-score" class="stat-value">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">DISTANCE</div>
+          <div id="go-distance" class="stat-value">0 m</div>
+        </div>
+        <div class="stat-item gold">
+          <div class="stat-label">COINS COLLECTED</div>
+          <div id="go-coins" class="stat-value">0</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">BEST RECORD</div>
+          <div id="go-best-score" class="stat-value">0</div>
+        </div>
+      </div>
+
+      <button id="btn-restart-game" class="btn-primary">TRY AGAIN</button>
+    </div>
+  </div>
+
+  <!-- Pause Screen -->
+  <div id="pause-overlay" class="screen-overlay hidden">
+    <div class="modal-card">
+      <h1 class="game-title">GAME PAUSED</h1>
+      <p class="game-subtitle">RUNNER IN STASIS</p>
+      <button id="btn-resume-game" class="btn-primary">RESUME</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/three.min.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/game.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
