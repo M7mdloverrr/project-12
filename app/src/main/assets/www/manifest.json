@@ -1,0 +1,17 @@
+{
+  "name": "Ghost Runner 3D",
+  "short_name": "GhostRunner",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#080114",
+  "theme_color": "#ff007f",
+  "description": "3D Neon Endless Cyber Runner game with ghosts, gold coins, and high-speed dodging.",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23080114'/%3E%3Cpath d='M256 90c-70 0-120 50-120 120v180l40-30 40 30 40-30 40 30 40-30 40 30V210c0-70-50-120-120-120z' fill='%2300f0ff' filter='drop-shadow(0 0 20px %2300f0ff)'/%3E%3Ccircle cx='210' cy='190' r='18' fill='%23ff007f'/%3E%3Ccircle cx='302' cy='190' r='18' fill='%23ff007f'/%3E%3C/svg%3E",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
